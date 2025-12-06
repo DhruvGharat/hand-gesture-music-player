@@ -3,7 +3,7 @@ class GestureController:
         self.prev_x = None  # stores previous wrist x-position
 
     def count_fingers(self, lm):
-        fingertips = [8, 12, 16, 20]  # Index, Middle, Ring, Pinky tips
+        fingertips = [8, 12, 16, 20]  # detectIndex, Middle, Ring, Pinky tips
         finger_count = 0
 
         for tip in fingertips:
