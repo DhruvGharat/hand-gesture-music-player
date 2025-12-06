@@ -57,7 +57,7 @@ while True:
             cv2.putText(frame, f"Fingers: {finger_count}", (20, 50),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
 
-            # Display swipe
+            # toDisplay swipe
             if swipe:
                 cv2.putText(frame, f"Swipe: {swipe}", (20, 100),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
