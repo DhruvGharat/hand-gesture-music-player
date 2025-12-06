@@ -1,70 +1,60 @@
-# Hand Gesture Music Player
+# ✋🎵 Hand Gesture Controlled Music Player  
+A fun beginner-friendly Machine Learning + Computer Vision project built using **Python, OpenCV, and MediaPipe**.  
+This project allows you to **play, pause, and change music tracks using just hand gestures** — no buttons, no UI, just gestures in front of your webcam.
 
-Simple project to control music playback using hand gestures from a webcam (OpenCV + MediaPipe). The player uses `pygame` for audio playback.
+---
 
-**Project structure**
-- `main.py` — entry point: captures webcam frames, runs MediaPipe hand detection, maps gestures to the `MusicPlayer`.
-- `gesture_controller.py` — logic for counting fingers and detecting simple left/right swipes.
-- `music_player.py` — loads and plays `.mp3` files from the `music/` folder using `pygame`.
-- `music/` — place your `.mp3` music files here.
+## 🚀 Why I Built This
+I recently started exploring **Machine Learning**, and while experimenting with real-time computer vision tools like **OpenCV** and **MediaPipe**, I wanted to build something hands-on and interactive.
 
-**Python version**
-This repo includes a `.venv` created with Python 3.14 (see `.venv/pyvenv.cfg`). The project should work with Python 3.9+ but the existing environment was made with Python 3.14.
+This project is simple, but building it while learning concepts like landmark detection, gesture logic, and real-time processing was genuinely fun and insightful.
 
-## Setup (Windows PowerShell)
+---
 
-1. Create a virtual environment (optional if `.venv` already exists):
+## ✨ Features
 
-```powershell
-python -m venv .venv
-```
+### 🎵 Music Control with Hand Gestures  
+- **Open Palm (4 fingers open)** → Play / Resume music  
+- **Fist (0 fingers open)** → Pause music  
+- **Swipe Right** → Next song  
+- **Swipe Left** → Previous song  
 
-2. Activate the virtual environment:
+### 🔧 Real-time Hand Tracking
+- Powered by **MediaPipe Hands ML model**  
+- Tracks **21 hand landmarks** with high accuracy  
+- Detects finger states & movement direction
 
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
+### 🖥 Real-time Overlay  
+- Displays finger count  
+- Displays detected gesture  
+- Shows swipe direction  
 
-3. Upgrade `pip` and install dependencies:
+---
 
-```powershell
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
+## 🛠 Tech Stack
 
-4. Add some `.mp3` files to the `music/` folder.
+| Component | Usage |
+|----------|-------|
+| **Python 3.10** | Core programming |
+| **OpenCV** | Webcam access, frame processing, display |
+| **MediaPipe** | ML model for hand landmark detection |
+| **Pygame** | Music playback control |
+| **Numpy** | Used internally by OpenCV |
 
-5. Run the app:
+---
 
-```powershell
-python main.py
-```
+## 🧠 How It Works
 
-Press `q` in the video window to quit.
+### 1️⃣ MediaPipe Hand Detection  
+MediaPipe provides 21 landmark points for each hand.  
+Example:  
+- `landmark[8]` → Index fingertip  
+- `landmark[0]` → Wrist  
 
-## Notes and tips
-- If PowerShell blocks activation, temporarily allow the script for the process:
+### 2️⃣ Finger Counting  
+A finger is considered “open” if its **tip landmark is above its lower joint landmark**.
 
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
-```
-
-- If your audio files are large, consider tracking them with Git LFS or excluding them from the repo and providing a download link instead.
-
-- If you prefer a different Python version, create the venv with that interpreter and re-install dependencies.
-
-## Prepare and push to GitHub
-
-Run these commands from the project root to initialize a git repo and push (replace `<your-repo-url>`):
-
-```powershell
-git init
-git add .
-git commit -m "Initial commit: hand-gesture-music-player"
-git branch -M main
-git remote add origin <your-repo-url>
-git push -u origin main
-```
-
-If you need, I can initialize the repo locally and help you connect it to a GitHub repository (I will not push without your confirmation and credentials).
+Example logic:  
+```python
+if lm[8].y < lm[6].y:
+    finger_open = True
